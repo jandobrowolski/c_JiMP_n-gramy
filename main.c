@@ -1,28 +1,38 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include "generator.h"
+#include "IO.h"
 
 int main (int argc, char **argv)
 {
-	
-  int aflag = 0;
-  int bflag = 0;
-  char *cvalue = NULL;
-  int index;
-  int c;
 
-  opterr = 0;
-  while ((c = getopt (argc, argv, "pbnmazws:")) != -1)
-    switch (c)
-      {
-      case 'p':
+	generuj(argc, argv);
+	for(int i=0; i<wyniki->iloscwyrazow; i++)
+	{
+		printf("%s ", wyniki->wskaznik[i]);
+	}
+	return 0;
+	
+	/*
+	int aflag = 0;
+	int bflag = 0;
+	char *cvalue = NULL;
+	int index;
+	int c;
+
+	opterr = 0;
+	while ((c = getopt (argc, argv, "pbnmazws:")) != -1)
+	switch (c)
+	{
+	case 'p':
 		while ()
 			FILE *wej[i] = fopen (optarg, "r");
         break;
-      case 'b':
+	case 'b':
         break;
-      case 'n':
+	case 'n':
         break;
-      case '?':
+	case '?':
         if (optopt == 'c')
           fprintf (stderr, "Option -%c requires an argument.\n", optopt);
         else if (isprint (optopt))
@@ -41,4 +51,5 @@ int main (int argc, char **argv)
   for (index = optind; index < argc; index++)
     printf ("Non-option argument %s\n", argv[index]);
   return 0;
+  */
 }
