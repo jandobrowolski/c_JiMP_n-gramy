@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <time.h>
 
-#define MAXDLUGWYRAZU 25
+#define MAXDLUGWYRAZU 100
 
 struct {
 char **znak;
@@ -14,11 +14,12 @@ int iloscwyrazow;
 struct {
 char **wskaznik;
 int limit;
+int limitakapitow;
 int iloscwyrazow;
 } *wyniki;
 
 void alokujwszystko ();
-void dorzuc (char *wyraz);/*
-int wczytaj (argc, **argv, *ngram);
-int zapisz (argc, **argv, *ngram);
-int zapiszbaze (argc, **argv, *ngram);*/
+void dorzuc (char *wyraz);
+int wczytaj (char *value);
+int zapisz (char *zflag);
+int zapiszbaze (char *wflag);

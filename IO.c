@@ -1,9 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <time.h>
 #include "IO.h"
-
-#define MAXDLUGWYRAZU 25
 
 
 
@@ -21,6 +20,7 @@ void alokujwszystko ()
 	
 	wyniki = malloc(sizeof(*wyniki));
 	wyniki->limit = 1024;
+	wyniki->limitakapitow = 1024;
 	wyniki->iloscwyrazow = 0;
 	wyniki->wskaznik = (char**) malloc ( sizeof(char*) * wyniki->limit );
 	for(int i=0; i<ngram->size; i++)
@@ -41,30 +41,77 @@ void dorzuc (char *wyraz)
 		}
 		ngram->size *=2;
 	}
-	ngram->znak[ngram->iloscwyrazow] = wyraz;
+	strcpy (ngram->znak[ngram->iloscwyrazow], wyraz);
 	ngram->iloscwyrazow++;
 }
 
-/*
 
-int wczytaj(argc, **argv, *ngram)
+int wczytaj(char *value)
 {
-	FILE *in = fopen(argv[1], "r");
-	
-	
+	char *result = malloc(strlen("data/")+strlen(value)+1);
+    strcpy(result, "data/");
+    strcat(result, value);
+	FILE *in = fopen(result, "r");
+	if(in==NULL)
+		return 1;
+	char tmp;
+	char *wyraz = malloc(sizeof(char)*MAXDLUGWYRAZU);
+	int j=0;
+	while((tmp=getc(in))!=EOF)
+	{
+		if(tmp>32&&tmp<126)
+		{
+			wyraz[j]=tmp;
+			j++;
+		}
+		else if(j!=0)
+		{
+			dorzuc(wyraz);
+			for(int i=0; i<MAXDLUGWYRAZU; i++)
+				wyraz[i]='\0';
+			j=0;
+		}
+	}
+	if(j!=0)
+	{
+		dorzuc(wyraz);
+		free(wyraz);
+	}
+	fclose(in);
+	return 0;
 }
--czyta pliki wej?ciowe, ka?dy kolejny wyraz wrzuca do ngram
 
 
-int zapisz(argc, **argv, *ngram)
+int zapisz(char *zflag)
 {
-	
+	char *result = malloc(strlen("generated/")+strlen(zflag)+1);
+    strcpy(result, "generated/");
+    strcat(result, zflag);
+	FILE *out = fopen(result, "w");
+	if((wyniki->iloscwyrazow / wyniki->limitakapitow) >=10)
+		for(int i=0; i<wyniki->iloscwyrazow; i++)
+		{
+			fprintf(out, "%s ", wyniki->wskaznik[i]);
+			if(i%(wyniki->iloscwyrazow / wyniki->limitakapitow) == wyniki->iloscwyrazow / wyniki->limitakapitow - 1)
+				fprintf(out, "\n");
+		}
+	else
+		for(int i=0; i<wyniki->iloscwyrazow; i++)
+		{
+			fprintf(out, "%s ", wyniki->wskaznik[i]);
+			if(i%10 == 9)
+				fprintf(out, "\n");
+		}
+	fclose(out);
 }
--zapisuje tekst wynikowy do pliku
 
 
-int zapiszbaze(argc, **argv, *ngram)
+int zapiszbaze(char *wflag)
 {
-	
+	FILE *out = fopen(wflag, "w");
+	for(int i=0; i<ngram->iloscwyrazow; i++)
+	{
+		fprintf(out, "%s ", ngram->znak[i]);
+	}
+	fclose(out);
 }
--zapisuje u?yt? baz? danych do pliku*/
