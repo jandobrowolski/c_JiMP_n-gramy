@@ -1,0 +1,20 @@
+\documentclass{article}
+\usepackage{polski}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{latexsym}
+\usepackage{graphicx}
+\author{Jan Dobrowolski}
+\title{Sprawozdanie z projektu - generator tekstu}
+\frenchspacing
+\newgeometry{tmargin=3cm, bmargin=3cm, lmargin=2.5cm, rmargin=2.5cm}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2ex plus 0.5ex minus 0.2ex}
+\begin{document}
+\maketitle
+\section{Informacje ogólne}
+Program służy do generowania tekstu na podstawie tekstu źródłowego używając n-gramów. Projekt wykonany został w języku c, przeznaczony jest do użycia w środowisku tekstowym.
+\section{Testowanie}
+Program został przezemnie pisany i testowany dużymi kawałkami. Po pierwsze zakodowany został główny moduł programu - generator, który po przetestowaniu kilkoma danymi wejściowymi zacząłem wzbogacać o osobno przetestowaną obsługę plików, a następnie obsługę flag. W trakcie programowania w wielu miejscach kodu popełniałem drobne błędy, które odnajdywałem przy użyciu GNU debuggera. W miejscach, w których brakowało mi wyobraźni, podparłem się wiedzą z forów informatycznych (np. obsługa wielu argumentów jednej flagi).Po upewnieniu się, że program działa poprawnie, wprowadziłem prawidłowe zwalnianie pamięci i po usunięciu ostatnich widocznych błędów / niejasności w kodzie przystąpiłem do ostatnich testów. Użyłem do tego kilku tekstów ze strony https://www.gutenberg.org
+
+\end{document}

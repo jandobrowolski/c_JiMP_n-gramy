@@ -18,6 +18,8 @@ int limitakapitow;
 int iloscwyrazow;
 } *wyniki;
 
+
+void free_all();
 void alokujwszystko ();
 void dorzuc (char *wyraz);
 int wczytaj (char *value);

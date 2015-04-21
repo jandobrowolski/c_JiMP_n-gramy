@@ -23,10 +23,26 @@ void alokujwszystko ()
 	wyniki->limitakapitow = 1024;
 	wyniki->iloscwyrazow = 0;
 	wyniki->wskaznik = (char**) malloc ( sizeof(char*) * wyniki->limit );
-	for(int i=0; i<ngram->size; i++)
+	for(int i=0; i<wyniki->limit; i++)
 	{
 		wyniki->wskaznik[i] = (char*) malloc (sizeof(char) * MAXDLUGWYRAZU);
 	}
+}
+
+void free_all()
+{
+	for(int i=0; i<ngram->size; i++)
+	{
+		free(ngram->znak[i]);
+	}
+	for(int i=0; i<wyniki->limit; i++)
+	{
+		free(wyniki->wskaznik[i]);
+	}
+	free(ngram->znak);
+	free(wyniki->wskaznik);
+	free(ngram);
+	free(wyniki);
 }
 
 
@@ -88,6 +104,8 @@ int zapisz(char *zflag)
     strcpy(result, "generated/");
     strcat(result, zflag);
 	FILE *out = fopen(result, "w");
+	if(out == NULL)
+		return 1;
 	if((wyniki->iloscwyrazow / wyniki->limitakapitow) >=10)
 		for(int i=0; i<wyniki->iloscwyrazow; i++)
 		{
@@ -103,15 +121,23 @@ int zapisz(char *zflag)
 				fprintf(out, "\n");
 		}
 	fclose(out);
+	return 0;
 }
 
 
 int zapiszbaze(char *wflag)
 {
+	char *result = malloc(strlen("generated/")+strlen(wflag)+strlen(".dat")+1);
+    strcpy(result, "data/");
+    strcat(result, wflag);
+    strcat(result, ".dat");
 	FILE *out = fopen(wflag, "w");
+	if(out == NULL)
+		return 1;
 	for(int i=0; i<ngram->iloscwyrazow; i++)
 	{
 		fprintf(out, "%s ", ngram->znak[i]);
 	}
 	fclose(out);
+	return 0;
 }

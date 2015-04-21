@@ -13,7 +13,7 @@ int main (int argc, char **argv)			//obsługa flag i wywołanie funkcji
 	int index;
 	int c;
 	char *zflag = "gen_wyniki.txt";
-	char *wflag = "gen_baza.txt";
+	char *wflag = "gen_wyniki.txt";
 	int sflag = 0;
 	while ((c=getopt(argc, argv, "p:b:n:m:a:z:w:s")) != -1)
 	switch (c)
@@ -23,8 +23,12 @@ int main (int argc, char **argv)			//obsługa flag i wywołanie funkcji
             while(index < argc){
                 if(argv[index][0] == '-'){         //czy następny wyraz to nie flaga
                     break;
-                }
-				wczytaj(argv[index]);
+                }		
+				if(wczytaj(argv[index])==1)
+				{
+					printf("błąd: nie można odczytać pliku");
+					return 1;
+				}
 				index++;
             }
 			optind = index - 1;
@@ -34,8 +38,12 @@ int main (int argc, char **argv)			//obsługa flag i wywołanie funkcji
             while(index < argc){
                 if(argv[index][0] == '-'){         //czy następny wyraz to nie flaga
                     break;
-                }
-				wczytaj(argv[index]);
+                }	
+				if(wczytaj(argv[index])==1)
+				{
+					printf("błąd: nie można odczytać pliku");
+					return 1;
+				}
 				index++;
             }
 			optind = index - 1;
@@ -74,10 +82,19 @@ int main (int argc, char **argv)			//obsługa flag i wywołanie funkcji
 			abort ();
 	}
 	
-	
 	generuj(argc, argv);			//tutaj cała magia
-	zapisz(zflag);
-	
+	if(zapisz(zflag)==1)
+	{
+		printf("błąd: nie można zapisac pliku");
+		return 1;
+	}
+	if(wflag!="gen_wyniki.txt")
+		if(zapiszbaze(wflag)==1)
+		{
+			printf("błąd: nie można zapisac bazy");
+			return 1;
+		}
+	free_all();
 	printf("Tekst wygenerowano pomyslnie\n");
 	return 0;
 	
